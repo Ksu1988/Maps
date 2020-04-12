@@ -1,0 +1,49 @@
+﻿@model TravelTest.Models.Place
+@{
+    ViewData["Title"] = "Map";
+}
+
+<h1>Map</h1>
+
+<link rel="stylesheet" href="~/css/leaflet.css" />
+<script src="~/js/leaflet.js"></script>
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="js/dist/leaflet.ie.css" />
+<![endif]-->
+
+
+<style>
+    #map {
+        width: 800px;
+        height: 600px;
+    }
+</style>
+
+
+<div id="map"></div>
+
+
+<script type='text/javascript'>
+    let l = 0;
+    let p = 0;
+
+       l = Number.parseFloat(@Html.ValueFor(model => model.Latitude).Replace(',','.'));
+     p = Number.parseFloat(@Html.ValueFor(model => model.Longitude).Replace(',','.'));
+
+    var map = L.map('map').setView([l, p], 10);
+
+     //Добавляем на нашу карту слой OpenStreetMap
+    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a rel="nofollow" href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([ l,p]).addTo(map)
+        .bindPopup("<strong>@Html.DisplayFor(model => model.Name)</strong>").openPopup();
+
+</script>
+
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

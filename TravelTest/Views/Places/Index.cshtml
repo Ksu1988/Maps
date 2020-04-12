@@ -1,0 +1,27 @@
+﻿@*@model IEnumerable<TravelTest.Models.Place>*@
+@model TravelTest.Models.Coordinates
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<h1>Список координат</h1>
+
+<form>
+    <select asp-for="PlaceName" onchange="window.location.href = this.options[this.selectedIndex].value">
+        @foreach (var item in Model.Places)
+        {
+            <option value="Places/Map/@item.Id">
+                 @Html.DisplayFor(modelItem => item.Name)
+            </option>
+
+        }
+
+    </select>
+</form>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
